@@ -21,6 +21,16 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+def usage():
+    """ Prints the usage message """
+    print "Usage:\n\nanalyzePayPal.py PayPalTransactionsFile.csv\n"
+    print ""
+    print "To get/create the PayPalTransactionsFile.csv, log in to your PayPal account."
+    print "Then follow Activity -> Statements -> Activity Export"
+    print "Select period, and in File Type, select Comma Delimited - All Activity"
+    print "Click Download. The file downloaded is the input file to this script, to be given as first command line argument"   
+
+
 def addValue( currencies, currency, name, month, amount):
     """This function adds the data amount, for client name, to the data structure currencies for the given month.   """
     m = int(month)
@@ -35,13 +45,7 @@ def addValue( currencies, currency, name, month, amount):
     
     val = val + float( amount)
 
-    l = len(currencies[currency][name])
-    if( l < m):
-        for i in range( l, m):
-            currencies[currency][name].append(0)
-        currencies[currency][name].append( val)
-    else:
-        currencies[currency][name][m] = val
+    currencies[currency][name][m] = val
     currencies[currency][name] [0] = currencies[currency][name] [0] + float(amount)
     logger.debug( "returning from addValue: client name: " + name + str(currencies[currency][name]))
     return currencies
@@ -80,11 +84,11 @@ def analyze(filename):
                 if name in currencies[currency]:
                     currencies = addValue( currencies, currency, name, month, amount)
                 else:
-                    currencies[currency][name] = list()
+                    currencies[currency][name] = list([0] * 13)
                     currencies = addValue( currencies, currency, name, month, amount)
             else:
                 currencies[currency] = dict()
-                currencies[currency][name] = list()
+                currencies[currency][name] = list([0] * 13)
                 currencies = addValue( currencies, currency, name, month, amount)
             
         # as of 25 dec 2015: Two types of comments. 1. "Withdrawn to: XYZ Bank ..." 2. "Withdraw funds to Bank Account"
@@ -96,7 +100,7 @@ def analyze(filename):
         total = 0
         print "\n%s was received from following clients:\n" % ( c) # EUR/USD
 
-        months = list()
+        months = list([0]* 12)
         currtotal = 0
         for n in sorted( currencies[c], key=currencies[c].get):
             usertotal = 0
@@ -106,13 +110,7 @@ def analyze(filename):
                 logger.debug("name = %s val = %d", n, val)
                 if i > 0: #ignore first value
                     usertotal = usertotal + val
-                    l = len( months)
-                    if l < i:
-                        for j in range( l, i):
-                            months.append(0.0)
-                        months[i-1] = months[i-1] +  float(val)
-                    else:
-                        months[i-1] = months[i-1] + float(val)
+                    months[i-1] = months[i-1] + float(val)
                 i = i + 1
             print "%30s: %s" % (n, usertotal)
             currtotal = currtotal + usertotal
@@ -130,14 +128,6 @@ def analyze(filename):
 
     print "\nTotal Withdrawn in local currency = ", totalWithdrawn
 
-def usage():
-    """ Prints the usage message """
-    print "Usage:\n\nanalyzePayPal.py PayPalTransactionsFile.csv\n"
-    print ""
-    print "To get/create the PayPalTransactionsFile.csv, log in to your PayPal account."
-    print "Then follow Activity -> Statements -> Activity Export"
-    print "Select period, and in File Type, select Comma Delimited - All Activity"
-    print "Click Download. The file downloaded is the input file to this script, to be given as first command line argument"   
 
 
 
