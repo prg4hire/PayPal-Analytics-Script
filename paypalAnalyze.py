@@ -30,29 +30,8 @@ def usage():
     print "Select period, and in File Type, select Comma Delimited - All Activity"
     print "Click Download. The file downloaded is the input file to this script, to be given as first command line argument"   
 
-
-def addValue( currencies, currency, name, month, amount):
-    """This function adds the data amount, for client name, to the data structure currencies for the given month.   """
-    m = int(month)
-    logger.debug( "entered addValue. for client name: " + name + str(currencies[currency][name]))
-    
-
-    val = 0.0
-    try:
-        val = float(currencies[currency][name][ m])
-    except:
-        val = 0.0
-    
-    val = val + float( amount)
-
-    currencies[currency][name][m] = val
-    currencies[currency][name] [0] = currencies[currency][name] [0] + float(amount)
-    logger.debug( "returning from addValue: client name: " + name + str(currencies[currency][name]))
-    return currencies
-
-
 def analyze(filename):
-    """ This function analyzes the filename """
+    """ This function analyzes the Paypal csv transaction file """
     
     # The basic data structure that is used to store the amounts sent. 
     # The key of the outer dict is a currency name. Then the inner dict's key is 
@@ -60,7 +39,7 @@ def analyze(filename):
     # sum received for each month. 0th value is the total sum received for that client.
     # 1st value is for Jan, 2nd for Feb, and so on. Total is stored at 0th position so that the values 
     # can be easily sorted. An example state is { "USD: { "John": [1000, 100, 800, 0,0,0,0,0,0,0,0,0,100]}} 
-    currencies = dict(dict())    
+    currencies = dict(dict(list()))    
 
     totalWithdrawn = 0
 
@@ -79,18 +58,16 @@ def analyze(filename):
             if "Update" in typ:    # some transactiions are updattes, such as update that echeque cleared. We ignore these.
                 continue 
             month = date[3:5]
-            #print month 
             if currency in currencies:
-                if name in currencies[currency]:
-                    currencies = addValue( currencies, currency, name, month, amount)
-                else:
+                if name not in currencies[currency]:
                     currencies[currency][name] = list([0] * 13)
-                    currencies = addValue( currencies, currency, name, month, amount)
             else:
                 currencies[currency] = dict()
                 currencies[currency][name] = list([0] * 13)
-                currencies = addValue( currencies, currency, name, month, amount)
             
+            currencies[currency][name][int(month)] += float( amount)
+            currencies[currency][name] [0] +=  float(amount)
+
         # as of 25 dec 2015: Two types of comments. 1. "Withdrawn to: XYZ Bank ..." 2. "Withdraw funds to Bank Account"
         if typ.find( "ithdraw") != -1:
             totalWithdrawn = totalWithdrawn + float(amount[1:])
@@ -123,13 +100,8 @@ def analyze(filename):
         print ""
         for m in months:
             print "{:5.0f}".format(m),  
-
         print "\n--------------------------------------------------------------------------------"
-
     print "\nTotal Withdrawn in local currency = ", totalWithdrawn
-
-
-
 
 if __name__ == "__main__":
     logger.debug('Start script')
