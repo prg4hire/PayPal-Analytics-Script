@@ -39,7 +39,7 @@ def analyze(filename):
     # sum received for each month. 0th value is the total sum received for that client.
     # 1st value is for Jan, 2nd for Feb, and so on. Total is stored at 0th position so that the values 
     # can be easily sorted. An example state is { "USD: { "John": [1000, 100, 800, 0,0,0,0,0,0,0,0,0,100]}} 
-    currencies = dict(dict(list()))    
+    currencies = dict()    
 
     totalWithdrawn = 0
 
@@ -60,16 +60,16 @@ def analyze(filename):
             month = date[3:5]
             if currency in currencies:
                 if name not in currencies[currency]:
-                    currencies[currency][name] = list([0] * 13)
+                    currencies[currency][name] = [0] * 13
             else:
                 currencies[currency] = dict()
-                currencies[currency][name] = list([0] * 13)
+                currencies[currency][name] = [0] * 13
             
             currencies[currency][name][int(month)] += float( amount)
             currencies[currency][name] [0] +=  float(amount)
 
         # as of 25 dec 2015: Two types of comments. 1. "Withdrawn to: XYZ Bank ..." 2. "Withdraw funds to Bank Account"
-        if typ.find( "ithdraw") != -1:
+        if "ithdraw" in typ:
             totalWithdrawn = totalWithdrawn + float(amount[1:])
 
     print "\nClient names and total amounts sent by them in a specific currency:\n"
@@ -77,7 +77,7 @@ def analyze(filename):
         total = 0
         print "\n%s was received from following clients:\n" % ( c) # EUR/USD
 
-        months = list([0]* 12)
+        months = [0]* 12
         currtotal = 0
         for n in sorted( currencies[c], key=currencies[c].get):
             usertotal = 0
