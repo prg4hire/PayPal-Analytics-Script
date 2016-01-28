@@ -8,7 +8,7 @@
 
 # This script was written to help all freelancers, businesses, sellers etc who use PayPal. 
 # If you find it useful, consider hiring me or donating at my gmail/PayPal address prg4hire@gmail.com
-# My bitcoin address is 1JVM63khCnZbi36i3w2pbXWgKJ1VaRLP9o
+# My bitcoin address is 18LNpmGtgFA2NGnQr4w7miNKfRB29ny5ot
 
 import csv, sys
 
@@ -50,7 +50,6 @@ def analyze(filename):
         usage()
         exit()
 
-
     for date,time, timezone, name, typ, status, currency, amount, receiptid,empty, balance in csvlines:
         amount = amount.replace(",", "") # change numbers from 1,123 to 1123
 
@@ -71,7 +70,9 @@ def analyze(filename):
         # as of 25 dec 2015: Two types of comments. 1. "Withdrawn to: XYZ Bank ..." 2. "Withdraw funds to Bank Account"
         if "ithdraw" in typ:
             totalWithdrawn = totalWithdrawn + float(amount[1:])
+    return currencies, totalWithdrawn
 
+def printText(currencies, totalWithdrawn):
     print "\nClient names and total amounts sent by them in a specific currency:\n"
     for c in sorted( currencies, key=currencies.get):
         total = 0
@@ -110,4 +111,5 @@ if __name__ == "__main__":
         usage()
         exit()
 
-    analyze( sys.argv[1])
+    currencies, totalWithdrawn = analyze( sys.argv[1])
+    printText( currencies, totalWithdrawn)
