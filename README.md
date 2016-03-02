@@ -22,4 +22,4 @@ Click Download. The file downloaded is the input file to this script, to be give
 
 This script was written to help all freelancers, businesses, sellers etc who use PayPal. 
 If you find it useful, consider hiring me or donating at my gmail/PayPal address prg4hire@gmail.com
-My bitcoin address is 1JVM63khCnZbi36i3w2pbXWgKJ1VaRLP9o
+My bitcoin address is 18LNpmGtgFA2NGnQr4w7miNKfRB29ny5ot
