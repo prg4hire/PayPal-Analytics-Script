@@ -1,8 +1,4 @@
 
-# Introduction to VM 
-* data is lists of binaries.
-* 'a b c' on stack means that 'c' is on top of stack, and 'a' is at the bottom
-* the machine consists of two stacks. The normal stack and the r-stack. r-stack is operated by only two opcodes: >r and r>
 
 # Opcodes
 ## values opcodes
@@ -49,8 +45,8 @@ opcode | symbol | stack changes | comment
 
 
 ## arithmetic opcodes
-To do arithmetic:
-only works with 4-byte integers. Results are 4-byte integers. 32-bits. The integers are encoded so that FFFFFFFF is the highest integer and 00000000 is the lowest.
+Note about arithmetic opcodes:
+they only works with 4-byte integers. Results are 4-byte integers. 32-bits. The integers are encoded so that FFFFFFFF is the highest integer and 00000000 is the lowest.
 
 opcode | symbol | stack changes | comment
 --- | --- | --- | --- 
@@ -69,106 +65,69 @@ opcode | symbol | stack changes | comment
 
 opcode | symbol | stack changes | comment
 --- | --- | --- | --- 
-70 if  conditional statement
-
-71 else  part of an switch conditional statement
-
-72 then part of switch conditional statement.
+70 | if   |  | conditional statement
+71 | else |  | part of an switch conditional statement
+72 | then |  | part of switch conditional statement.
 
 
 # logic opcodes
-
 opcode | symbol | stack changes | comment
 --- | --- | --- | --- 
-80 not %( true/false -- false/true )
-
-81 and ( true/false true/false -- true/false ) %false is 0, true is any non-zero byte.
-
-82 or %( true/false true/false -- true/false )
-
-83 xor %( true/false true/false -- true/false )
-
-84 band ( 4 12 -- 4 ) %if inputed binaries are different length, it returns a binary of the longer length
-
-85 bor ( 4 8 -- 12 )
-
-86 bxor ( 4 12 -- 8 ) 
+80 | not | true/false -- false/true | 
+81 | and | true/false true/false -- true/false | false is 0, true is any non-zero byte.
+82 | or  | true/false true/false -- true/false |
+83 | xor | true/false true/false -- true/false |
+84 | band|  4 12 -- 4 | if inputed binaries are different length, it returns a binary of the longer length
+85 | bor | 4 8 -- 12  |
+86 | bxor| 4 12 -- 8  | 
 
 
 # check state opcodes
+Opcode not used anymore:  questions ( -- H ). the root of the questions trie from the previous block. Used for crowdfunding the asking of questions. %%%% We don't need this because the oracle trie can be used to crowdfund the asking of questions.
 opcode | symbol | stack changes | comment
 --- | --- | --- | --- 
-
-90 stack_size ( -- Size )
-
-91 total_coins %( -- TotalCoins )
-
-92 height %( -- Height )
-
-93 slash %( -- true/false) %if this is part of a solo_stop transaction, then return 0.
-         %If it is part of a slash transaction, return 1
-
-94 gas % ( -- X )
-
-95 ram ( -- X ) tells how much space is left in ram.
-
-96 id2addr % ( ID -- Addr )
-
-97 many_vars ( -- R ) how many more variables are defined
-
-98 many_funs ( -- F ) how many functions are there defined
-
-99 oracle ( -- R ) the root of the oracle trie from the previous block.
-
-100 id_of_caller ( -- ID ) the ID of the person who published the code on-chain
-
-%%%%100 questions ( -- H ) the root of the questions trie from the previous block. Used for crowdfunding the asking of questions. %%%% We don't need this because the oracle trie can be used to crowdfund the asking of questions.
-
-101 accounts ( -- A ) the root of the accounts trie from the previous block.
-
-102 channels ( -- C ) the root of the channels trie from the previous block.
-
-103 verify_merkle ( Root Proof Value -- Value true/false )
+90 | stack_size | -- Size |
+91 | total_coins | -- TotalCoins |
+92 | height | -- Height | 
+93 | slash | -- true/false | if this is part of a solo_stop transaction, then return 0. If it is part of a slash transaction, return 1
+94 | gas | -- X |
+95 | ram | -- X | tells how much space is left in ram.
+96 | id2addr | ID -- Addr |
+97 | many_vars | -- R | how many more variables are defined
+98 | many_funs | -- F | how many functions are there defined
+99 | oracle | -- R | the root of the oracle trie from the previous block.
+100 | id_of_caller | -- ID | the ID of the person who published the code on-chain
+101 | accounts | -- A | the root of the accounts trie from the previous block.
+102 | channels | -- C | the root of the channels trie from the previous block.
+103 | verify_merkle | Root Proof Value -- Value true/false |
 
 
 # function opcodes
 opcode | symbol | stack changes | comment
 --- | --- | --- | --- 
-
-110 : % this starts the function declaration.
-
-111 ; % This symbol ends a function declaration. example : square dup * ;
-
-112 recurse %crash. this word should only be used in the definition of a word.
-
-113 call %Use the binary at the top of the stack to look in our hashtable of defined words. If it exists call the code, otherwise crash.
+110 | : |  | this starts the function declaration.
+111 | ; |  |This symbol ends a function declaration. example : square dup * ;
+112 | recurse |  |crash. this word should only be used in the definition of a word.
+113 | call |  | Use the binary at the top of the stack to look in our hashtable of defined words. If it exists call the code, otherwise crash.
 
 
 # variables opcodes
 opcode | symbol | stack changes | comment
 --- | --- | --- | --- 
-
-120 ! % ( X -- Y ) % only stores 32-bit integers
-
-121 @ ( Y -- X )
+120 | !   | X -- Y |  only stores 32-bit integers
+121 | @   | Y -- X |
 
 
 # lists opcodes
 opcode | symbol | stack changes | comment
 --- | --- | --- | --- 
-
-130 cons % ( X Y -- [X|Y] )
-
-131 car % ( [X|Y] -- X Y )
-
-132 nil % ( -- [] ) this is the root of a list.
-
-134 ++ % ( X Y -- Z ) appends 2 lists or 2 binaries. Cannot append a list to a binary.
-
-135 split %( N Binary -- BinaryA BinaryB ) %Binary A has N*8 many bits. BinaryA appended to BinaryB makes Binary. 
-         %( N List -- ListA ListB ) % ListA has N elements, listA appended to ListB makes List.
-
-136 reverse % % ( F -- G ) %only works on lists
+130 | cons|  X Y -- [X|Y] | 
+131 | car |  [X|Y] -- X Y | 
+132 | nil |  -- []        | this is the root of a list.
+134 | ++  |  X Y -- Z     | appends 2 lists or 2 binaries. Cannot append a list to a binary.
+135 | split |  N Binary -- BinaryA BinaryB ) | Binary A has N*8 many bits. BinaryA appended to BinaryB makes Binary. 
+    |       |  N List -- ListA ListB )       | ListA has N elements, listA appended to ListB makes List
+136 | reverse |   F -- G | only works on lists
 
 
 These are compiler macros to make it easier to program.
