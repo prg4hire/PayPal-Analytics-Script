@@ -24,3 +24,26 @@ This script was written to help all freelancers, businesses, sellers etc who use
 If you find it useful, consider hiring me or donating at my PayPal address prg4hire@gmail.com
 My bitcoin address is 18LNpmGtgFA2NGnQr4w7miNKfRB29ny5ot
 
+
+
+data is lists of binaries.
+
+opcode, symbol for compiled language, stack changes
+
+# values opcodes
+
+opcode | literal | action | comment
+--- | --- | --- | --- 
+0 | int |  -- X  | the next 32 bits = 4 bytes are put on the stack as a single binary.
+2 | binary |  N -- L  | the next N * 8 bits are put on the stack as a single binary.
+
+
+# other opcodes
+
+opcode | literal | action | comment
+--- | --- | --- | --- 
+10 | print | ( Y -- X ) | prints the top element on stack
+11 | crash |    |code stops execution here. Whatever is on top of the stack is the final state.
+
+
+
