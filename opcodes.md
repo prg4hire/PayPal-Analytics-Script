@@ -1,23 +1,24 @@
 
-
+# Preface
 * data is lists of binaries.
 * 'a b c' on stack means that 'c' is on top of stack, and 'a' is at the bottom
+* the machine consists of two stacks. The normal stack and the r-stack. r-stack is operated by only two opcodes: >r and r>
 
-# values opcodes
+## values opcodes
 opcode | symbol | stack changes | comment
 ---| --- | --- | --- 
 0  | int |  -- X  | the next 32 bits = 4 bytes are put on the stack as a single binary.
 2  | binary |  N -- L  | the next N * 8 bits are put on the stack as a single binary.
 
 
-# other opcodes
+## other opcodes
 opcode | symbol | stack changes | comment
 ---| ---   | --- | --- 
 10 | print | ( Y -- X ) | prints the top element on stack
 11 | crash |    |code stops execution here. Whatever is on top of the stack is the final state.
 
 
-# stack opcodes
+## stack opcodes
 opcode | symbol | stack changes | comment
 --- | --- | --- | --- 
 20 | drop | X --     | will remove the top element on stack
@@ -30,7 +31,7 @@ opcode | symbol | stack changes | comment
 27 | pickn| N -- X | grabs X from N-deep into the stack.
 
 
-# r-stack opcodes
+## r-stack opcodes
 opcode | symbol | stack changes | comment
 ---| ---| ---   | --- 
 30 | >r | V --  |
@@ -38,7 +39,7 @@ opcode | symbol | stack changes | comment
 32 | r@ | -- V  | copies from return to stack
 
 
-# crypto opcodes
+## crypto opcodes
 opcode | symbol | stack changes | comment
 --- | --- | --- | --- 
 40 | hash | X -- <<Bytes:256>>  |
@@ -46,7 +47,7 @@ opcode | symbol | stack changes | comment
 42 | pub2addr |  Pub -- Addr  | This is difficult because we can't represent tuples. Maybe pinkcrypto:address needs to use lists instead
 
 
-# arithmetic opcodes
+## arithmetic opcodes
 To do arithmetic:
 only works with 4-byte integers. Results are 4-byte integers. 32-bits. The integers are encoded so that FFFFFFFF is the highest integer and 00000000 is the lowest.
 
