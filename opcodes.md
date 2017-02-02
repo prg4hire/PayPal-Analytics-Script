@@ -61,7 +61,7 @@ opcode | symbol | stack changes | comment
 58 | == | X Y -- true/false X Y |
 
 
-# conditions opcodes
+## conditions opcodes
 
 opcode | symbol | stack changes | comment
 --- | --- | --- | --- 
@@ -70,7 +70,7 @@ opcode | symbol | stack changes | comment
 72 | then |  | part of switch conditional statement.
 
 
-# logic opcodes
+## logic opcodes
 opcode | symbol | stack changes | comment
 --- | --- | --- | --- 
 80 | not | true/false -- false/true | 
@@ -82,7 +82,7 @@ opcode | symbol | stack changes | comment
 86 | bxor| 4 12 -- 8  | 
 
 
-# check state opcodes
+## check state opcodes
 Opcode not used anymore:  questions. the root of the questions trie from the previous block. Used for crowdfunding the asking of questions. We don't need this because the oracle trie can be used to crowdfund the asking of questions.
 
 opcode | symbol | stack changes | comment
@@ -103,7 +103,7 @@ opcode | symbol | stack changes | comment
 103 | verify_merkle | Root Proof Value -- Value true/false |
 
 
-# function opcodes
+## function opcodes
 opcode | symbol | stack changes | comment
 --- | --- | --- | --- 
 110 | : |  | this starts the function declaration.
@@ -112,14 +112,14 @@ opcode | symbol | stack changes | comment
 113 | call |  | Use the binary at the top of the stack to look in our hashtable of defined words. If it exists call the code, otherwise crash.
 
 
-# variables opcodes
+## variables opcodes
 opcode | symbol | stack changes | comment
 --- | --- | --- | --- 
 120 | !   | X -- Y |  only stores 32-bit integers
 121 | @   | Y -- X |
 
 
-# lists opcodes
+## lists opcodes
 opcode | symbol | stack changes | comment
 --- | --- | --- | --- 
 130 | cons|  X Y -- [X\|Y] | 
