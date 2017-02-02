@@ -83,7 +83,8 @@ opcode | symbol | stack changes | comment
 
 
 # check state opcodes
-Opcode not used anymore:  questions ( -- H ). the root of the questions trie from the previous block. Used for crowdfunding the asking of questions. %%%% We don't need this because the oracle trie can be used to crowdfund the asking of questions.
+Opcode not used anymore:  questions. the root of the questions trie from the previous block. Used for crowdfunding the asking of questions. We don't need this because the oracle trie can be used to crowdfund the asking of questions.
+
 opcode | symbol | stack changes | comment
 --- | --- | --- | --- 
 90 | stack_size | -- Size |
