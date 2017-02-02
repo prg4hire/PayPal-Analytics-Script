@@ -131,17 +131,16 @@ opcode | symbol | stack changes | comment
 136 | reverse |   F -- G | only works on lists
 
 
-These are compiler macros to make it easier to program.
+The following are compiler macros that make it easier to program:
 
-( a open parenthesis starts a multi-line comment block.
+* ( a open parenthesis starts a multi-line comment block.
 
-) a closed parenthesis ends the comment. Make sure to put spaces between the parenthesis and the other words. 
+* ) a closed parenthesis ends the comment. Make sure to put spaces between the parenthesis and the other words. 
 
-or_die ( B -- ) if B is true, then does nothing. if B is false, then it crashes.
+* or_die ( B -- ) if B is true, then does nothing. if B is false, then it crashes.
 
-+! ( Number Name -- ) increments the variable Name by Number
+* +! ( Number Name -- ) increments the variable Name by Number
 
-Lists are easy with these 3 words: "[", "," and, "]". You don't need spaces between them either. example: "[1,2,3,4]" 
 
 
 
