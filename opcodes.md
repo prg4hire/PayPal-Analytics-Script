@@ -1,9 +1,10 @@
 
-# Preface
+# Introduction to VM 
 * data is lists of binaries.
 * 'a b c' on stack means that 'c' is on top of stack, and 'a' is at the bottom
 * the machine consists of two stacks. The normal stack and the r-stack. r-stack is operated by only two opcodes: >r and r>
 
+# Opcodes
 ## values opcodes
 opcode | symbol | stack changes | comment
 ---| --- | --- | --- 
