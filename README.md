@@ -21,5 +21,6 @@ Click Download. The file downloaded is the input file to this script, to be give
 #Hire or Donate
 
 This script was written to help all freelancers, businesses, sellers etc who use PayPal. 
-If you find it useful, consider hiring me or donating at my gmail/PayPal address prg4hire@gmail.com
+If you find it useful, consider hiring me or donating at my PayPal address prg4hire@gmail.com
 My bitcoin address is 18LNpmGtgFA2NGnQr4w7miNKfRB29ny5ot
+
