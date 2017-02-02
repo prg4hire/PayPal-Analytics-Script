@@ -122,12 +122,12 @@ opcode | symbol | stack changes | comment
 # lists opcodes
 opcode | symbol | stack changes | comment
 --- | --- | --- | --- 
-130 | cons|  X Y -- [X|Y] | 
-131 | car |  [X|Y] -- X Y | 
+130 | cons|  X Y -- [X\|Y] | 
+131 | car |  [X\|Y] -- X Y | 
 132 | nil |  -- []        | this is the root of a list.
 134 | ++  |  X Y -- Z     | appends 2 lists or 2 binaries. Cannot append a list to a binary.
-135 | split |  N Binary -- BinaryA BinaryB ) | Binary A has N*8 many bits. BinaryA appended to BinaryB makes Binary. 
-    |       |  N List -- ListA ListB )       | ListA has N elements, listA appended to ListB makes List
+135 | split |  N Binary -- BinaryA BinaryB  | Binary A has N*8 many bits. BinaryA appended to BinaryB makes Binary. 
+    |       |  N List -- ListA ListB        | ListA has N elements, listA appended to ListB makes List
 136 | reverse |   F -- G | only works on lists
 
 
