@@ -59,7 +59,7 @@ def analyze(filename):
         date = date.replace('\"', '')
 
 
-        if "General Payment" in typ or "Mobile Payment" in typ or "Payment Received" in typ or "eCheque Received" in typ:
+        if "Mass Payment" in typ or "General Payment" in typ or "Mobile Payment" in typ or "Payment Received" in typ or "eCheque Received" in typ:
             if "Update" in typ:    # some transactiions are updattes, such as update that echeque cleared. We ignore these.
                 continue 
             date.strip()
